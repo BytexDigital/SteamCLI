@@ -1,5 +1,5 @@
 # SteamCLI
-SteamCLI is a client for the library [BytexDigital.Steam](https://github.com/BytexDigital/BytexDigital.Steam) .NET Core library.
+SteamCLI is a client for the [BytexDigital.Steam](https://github.com/BytexDigital/BytexDigital.Steam) .NET Core library.
 With Steam CLI you can download Steam apps and workshop items.
 
 ### Parameters
