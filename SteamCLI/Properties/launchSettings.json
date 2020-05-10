@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "BytexDigital.Steam.Clients.CLI": {
+      "commandName": "Project"
+    }
+  }
+}
