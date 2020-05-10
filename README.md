@@ -57,3 +57,9 @@ With Steam CLI you can download Steam apps and workshop items.
 ```
 .\steamcli.exe --username=user --password=passwd --app-download --targetdir=.\download --os=windows --appid=107410 --depotid=107419 --synctarget
 ```
+
+##### Option `--synctarget`
+If this option is enabled, the target directory will be scanned for existing files that are included in the download. If a file is already up to date, it's skipped, otherwise it's replaced with the downloaded version.
+
+##### Option `--enablesyncdelete`
+By default, `--synctarget` only adds and replaces files, but does not delete any. If this option is enabled, all files in the target directory that are NOT in the to be downloaded version are deleted.
