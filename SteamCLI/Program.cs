@@ -26,6 +26,9 @@ namespace BytexDigital.Steam.Clients.CLI
             [Option("password", Required = true, HelpText = "Password to use when logging into Steam.")]
             public string Password { get; set; }
 
+            [Option("sentrydir", Required = false, HelpText = "Directory in which sentry files will be saved.", Default = ".\\sentries")]
+            public string SentryDirectory { get; set; }
+
             [Option("targetdir", HelpText = "Specifies a directory to perform an action in.")]
             public string TargetDirectory { get; set; }
 
@@ -35,7 +38,7 @@ namespace BytexDigital.Steam.Clients.CLI
             [Option("branchpassword", HelpText = "Specifies a product banch password.")]
             public string BranchPassword { get; set; }
 
-            [Option("os", HelpText = "Specifies an operating system.")]
+            [Option("os", Required = false, HelpText = "Specifies an operating system.")]
             public string OS { get; set; }
 
             [Option("workers", HelpText = "Specifies how many download workers should work on one download task at a time.", Default = 50)]
@@ -103,10 +106,47 @@ namespace BytexDigital.Steam.Clients.CLI
             return input;
         }
 
+        private class AuthCodeProvider : SteamAuthenticationCodesProvider
+        {
+            public override string GetEmailAuthenticationCode(SteamCredentials steamCredentials)
+            {
+                Console.Write("Please enter your email auth code: ");
+
+                string input = Console.ReadLine();
+
+                Console.Write("Retrying... ");
+
+                return input;
+            }
+
+            public override string GetTwoFactorAuthenticationCode(SteamCredentials steamCredentials)
+            {
+                Console.Write("Please enter your 2FA code: ");
+
+                string input = Console.ReadLine();
+
+                Console.Write("Retrying... ");
+
+                return input;
+            }
+        }
+
         static async Task RunOptions(Options opt)
         {
-            _steamClient = new SteamClient(new SteamCredentials(opt.Username, opt.Password), GetUserCode);
+            SteamAuthenticationFilesProvider sentryFileProvider = default;
+
+            if (!string.IsNullOrEmpty(opt.SentryDirectory))
+            {
+                sentryFileProvider = new DirectorySteamAuthenticationFilesProvider(opt.SentryDirectory);
+            }
+
+            _steamClient = new SteamClient(new SteamCredentials(opt.Username, opt.Password), new AuthCodeProvider(), sentryFileProvider);
             _steamContentClient = new SteamContentClient(_steamClient, null, opt.WorkerCount, opt.ChunkBufferSizeBytes, opt.ChunkBufferUsageThreshold);
+
+            if (string.IsNullOrEmpty(opt.OS))
+            {
+                opt.OS = _steamClient.GetSteamOs().Identifier;
+            }
 
             Console.Write("Connecting to Steam... ");
 

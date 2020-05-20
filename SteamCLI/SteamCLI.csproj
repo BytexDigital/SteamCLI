@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="BytexDigital.Steam" Version="0.6.41-beta" />
+    <PackageReference Include="BytexDigital.Steam" Version="0.7.1-beta" />
     <PackageReference Include="CommandLineParser" Version="2.8.0" />
   </ItemGroup>
 </Project>

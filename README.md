@@ -8,6 +8,8 @@ With Steam CLI you can download Steam apps and workshop items.
 
   --password                Required. Password to use when logging into Steam.
 
+  --sentrydir               (Default: .\sentries) Directory in which sentry files will be saved.
+
   --targetdir               Specifies a directory to perform an action in.
 
   --branch                  Specifies a product branch.
