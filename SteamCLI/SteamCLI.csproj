@@ -7,6 +7,7 @@
     <Authors>Ryan Torzynski</Authors>
     <Company>Bytex Digital UG (haftungsbeschränkt)</Company>
     <Description>CLI for downloading Steam games and workshop content.</Description>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
