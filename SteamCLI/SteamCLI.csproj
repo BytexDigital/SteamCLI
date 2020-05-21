@@ -7,11 +7,11 @@
     <Authors>Ryan Torzynski</Authors>
     <Company>Bytex Digital UG (haftungsbeschränkt)</Company>
     <Description>CLI for downloading Steam games and workshop content.</Description>
-    <Version>1.0.1</Version>
+    <Version>1.0.2.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="BytexDigital.Steam" Version="0.7.1-beta" />
+    <PackageReference Include="BytexDigital.Steam" Version="0.7.21-beta" />
     <PackageReference Include="CommandLineParser" Version="2.8.0" />
   </ItemGroup>
 </Project>

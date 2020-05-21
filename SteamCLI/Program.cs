@@ -88,24 +88,6 @@ namespace BytexDigital.Steam.Clients.CLI
             result.WithNotParsed(HandleParsingError);
         }
 
-        static string GetUserCode(SteamLoginCallbackEventArgs args)
-        {
-            if (args.Requires2FA)
-            {
-                Console.Write("Please enter your 2FA code: ");
-            }
-            else
-            {
-                Console.Write("Please enter your email auth code: ");
-            }
-
-            string input = Console.ReadLine();
-
-            Console.Write("Retrying... ");
-
-            return input;
-        }
-
         private class AuthCodeProvider : SteamAuthenticationCodesProvider
         {
             public override string GetEmailAuthenticationCode(SteamCredentials steamCredentials)
