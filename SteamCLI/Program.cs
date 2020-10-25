@@ -22,7 +22,7 @@ namespace BytexDigital.Steam.Clients.CLI
         {
             public const string ANONYMOUS_USERNAME = "anonymous";
 
-            [Option("username", Required = true, HelpText = "Username to use when logging into Steam. Use \"" + ANONYMOUS_USERNAME + "\" for anonymous login.")]
+            [Option("username", Required = true, HelpText = "Username to use when logging into Steam. Use \"" + ANONYMOUS_USERNAME + "\" as username and password for anonymous login.")]
             public string Username { get; set; }
 
             [Option("password", Required = true, HelpText = "Password to use when logging into Steam.")]
