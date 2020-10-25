@@ -20,8 +20,9 @@ namespace BytexDigital.Steam.Clients.CLI
     {
         public class Options
         {
+            public const string ANONYMOUS_USERNAME = "anonymous";
 
-            [Option("username", Required = true, HelpText = "Username to use when logging into Steam.")]
+            [Option("username", Required = true, HelpText = "Username to use when logging into Steam. Use \"" + ANONYMOUS_USERNAME + "\" for anonymous login.")]
             public string Username { get; set; }
 
             [Option("password", Required = true, HelpText = "Password to use when logging into Steam.")]
@@ -79,6 +80,7 @@ namespace BytexDigital.Steam.Clients.CLI
 
         private static SteamClient _steamClient = null;
         private static SteamContentClient _steamContentClient = null;
+        private static SteamCredentials _steamCredentials = null;
 
 
         static async Task Main(string[] args)
@@ -123,7 +125,16 @@ namespace BytexDigital.Steam.Clients.CLI
                 sentryFileProvider = new DirectorySteamAuthenticationFilesProvider(opt.SentryDirectory);
             }
 
-            _steamClient = new SteamClient(new SteamCredentials(opt.Username, opt.Password), new AuthCodeProvider(), sentryFileProvider);
+            if (opt.Username == Options.ANONYMOUS_USERNAME)
+            {
+                _steamCredentials = SteamCredentials.Anonymous;
+            }
+            else
+            {
+                _steamCredentials = new SteamCredentials(opt.Username, opt.Password);
+            }
+
+            _steamClient = new SteamClient(_steamCredentials, new AuthCodeProvider(), sentryFileProvider);
             _steamContentClient = new SteamContentClient(_steamClient, null, opt.WorkerCount, opt.ChunkBufferSizeBytes, opt.ChunkBufferUsageThreshold);
 
             if (string.IsNullOrEmpty(opt.OS))
@@ -131,7 +142,7 @@ namespace BytexDigital.Steam.Clients.CLI
                 opt.OS = _steamClient.GetSteamOs().Identifier;
             }
 
-            Console.Write("Connecting to Steam... ");
+            Console.Write($"Connecting to Steam as \"{opt.Username}\"... ");
 
             try
             {
