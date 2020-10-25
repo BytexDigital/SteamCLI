@@ -157,7 +157,7 @@ namespace BytexDigital.Steam.Clients.CLI
                     if (logonEx.Result == SteamKit2.EResult.InvalidPassword)
                     {
                         Console.WriteLine($"Warning: The logon may have failed due to expired sentry-data. " +
-                            $"If you are sure, that the provided username and password are correct, consider deleting the .bin and .key file for the user \"{_steamClient.Credentials.Username}\" in the sentries directory.");
+                            $"If you are sure that the provided username and password are correct, consider deleting the .bin and .key file for the user \"{_steamClient.Credentials.Username}\" in the sentries directory.");
                     }
                 }
 
