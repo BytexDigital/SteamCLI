@@ -1,4 +1,5 @@
 ﻿using BytexDigital.Steam.ContentDelivery;
+using BytexDigital.Steam.ContentDelivery.Exceptions;
 using BytexDigital.Steam.ContentDelivery.Models;
 using BytexDigital.Steam.ContentDelivery.Models.Downloading;
 using BytexDigital.Steam.Core;
@@ -139,6 +140,16 @@ namespace BytexDigital.Steam.Clients.CLI
             catch (Exception ex)
             {
                 Console.WriteLine($"Failed! Error: {ex.Message}");
+
+                if (ex is SteamLogonException logonEx)
+                {
+                    if (logonEx.Result == SteamKit2.EResult.InvalidPassword)
+                    {
+                        Console.WriteLine($"Warning: The logon may have failed due to expired sentry-data. " +
+                            $"If you are sure, that the provided username and password are correct, consider deleting the .bin and .key file for the user \"{_steamClient.Credentials.Username}\" in the sentries directory.");
+                    }
+                }
+
                 Environment.Exit(3);
             }
 
